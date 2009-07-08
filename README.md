@@ -26,10 +26,10 @@ when you need original implementation of setf for some reasons, they
 are stored in lisp::+original-<function-name>+. so you can restore
 them by eval following.
 
-;;; restoring original functions
-(setf (symbol-function lisp::get-setf-method)
-      lisp::+original-get-setf-method
-      (symbol-function lisp::optimize-setf-method)
-      lisp::+original-optimize-setf-method
-      (symbol-function lisp::setf-expand-1)
-      lisp::+original-setf-expand-1)
+    ;;; restoring original functions
+    (setf (symbol-function lisp::get-setf-method)
+          lisp::+original-get-setf-method
+          (symbol-function lisp::optimize-setf-method)
+          lisp::+original-optimize-setf-method
+          (symbol-function lisp::setf-expand-1)
+          lisp::+original-setf-expand-1)
