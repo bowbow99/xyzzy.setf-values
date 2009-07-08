@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Optimization
+desc: Optimization around stores/newvalues form removed from lisp::optimize-setf-method via supporting multiple values should be restored.
+type: :task
+component: setf-values
+release: future
+reporter: bowbow99 <bowbow99@coffee>
+status: :unstarted
+disposition: 
+creation_time: 2009-07-08 20:26:25.045750 Z
+references: []
+
+id: 8b64b9ae69a48990a418a09734408c6e2f3b208e
+log_events: 
+- - 2009-07-08 20:26:29.857750 Z
+  - bowbow99 <bowbow99@coffee>
+  - created
+  - ""
