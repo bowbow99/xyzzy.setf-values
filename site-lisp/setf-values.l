@@ -4,7 +4,7 @@
 ;;;;
 ;;;; Author: bowbow99 <bowbow99@gmail.com>
 ;;;; Created: 2009-07-09 04:29:43
-;;;; Updated: 2009-07-09 05:06:07
+;;;; Updated: 2009-07-09 05:12:12
 ;;;;
 
 
@@ -13,6 +13,10 @@
 ;;;;
 ;;;; modified version of setf related functions
 ;;;;
+
+(defconstant +original-get-setf-method+ #'get-setf-method)
+(defconstant +original-optimize-setf-method #'optimize-setf-method)
+(defconstant +original-setf-expand-1 #'setf-expand-1)
 
 (defun get-setf-method (form &optional env)
   (multiple-value-bind (vars vals stores store-form access-form)
