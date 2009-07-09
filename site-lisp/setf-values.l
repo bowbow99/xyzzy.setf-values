@@ -4,19 +4,19 @@
 ;;;;
 ;;;; Author: bowbow99 <bowbow99@gmail.com>
 ;;;; Created: 2009-07-09 04:29:43
-;;;; Updated: 2009-07-09 05:12:12
+;;;; Updated: 2009-07-09 21:30:11
 ;;;;
 
 
 (in-package "lisp")
 
-;;;;
-;;;; modified version of setf related functions
-;;;;
-
 (defconstant +original-get-setf-method+ #'get-setf-method)
 (defconstant +original-optimize-setf-method #'optimize-setf-method)
 (defconstant +original-setf-expand-1 #'setf-expand-1)
+
+;;;;
+;;;; setf related functions modified for support multiple value.
+;;;;
 
 (defun get-setf-method (form &optional env)
   (multiple-value-bind (vars vals stores store-form access-form)
@@ -54,17 +54,23 @@
       (multiple-value-bind (vars vals stores store-form access-form)
           (get-setf-method place env)
         (multiple-value-setq
-            (vars vals store store-form access-form newvalue)
+            (vars vals stores store-form access-form newvalue)
             (optimize-setf-method vars vals stores store-form
                                   access-form (list newvalue)))
-        (if (or vars stores)
-            `(let* ,(mapcar #'list vars vals)
-               (multiple-value-bind ,stores ,(car newvalue)
-                 ,store-form))
-          store-form)))))
+        (setf vars (append vars stores)
+              vals (append vals (if (= (length stores) 1)
+                                    newvalue
+                                  (mapcar (lambda (ignore) nil) stores))))
+        (cond ((null vars) store-form)
+              ((> (length stores) 1)
+               `(let* ,(mapcar #'list vars vals)
+                  (multiple-value-setq ,stores ,(car newvalue))
+                  ,store-form))
+              (t `(let* ,(mapcar #'list vars vals)
+                    ,store-form)))))))
 
 ;;;;
-;;;; setf values
+;;;; (setf (value ...) ...)
 ;;;;
 
 (define-setf-method values (&rest places)
