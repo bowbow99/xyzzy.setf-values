@@ -20,3 +20,7 @@ log_events:
   - bowbow99 <bowbow99@coffee>
   - changed status from unstarted to in_progress
   - ""
+- - 2009-07-09 12:36:38.116750 Z
+  - bowbow99 <bowbow99@coffee>
+  - commented
+  - now expansion contains multiple-value-setq only when there is multiple stores.
