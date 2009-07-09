@@ -5,8 +5,8 @@ type: :task
 component: setf-values
 release: future
 reporter: bowbow99 <bowbow99@coffee>
-status: :in_progress
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2009-07-08 20:26:25.045750 Z
 references: []
 
@@ -31,3 +31,7 @@ log_events:
     implant newvalue into store form if:
     - newvalues is form of (values ...)
     - newvalue (one of arguments for values) is a constant or a symbol
+- - 2009-07-09 13:08:41.838625 Z
+  - bowbow99 <bowbow99@coffee>
+  - closed with disposition fixed
+  - ":p"
