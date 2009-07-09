@@ -5,7 +5,7 @@ type: :task
 component: setf-values
 release: future
 reporter: bowbow99 <bowbow99@coffee>
-status: :unstarted
+status: :in_progress
 disposition: 
 creation_time: 2009-07-08 20:26:25.045750 Z
 references: []
@@ -15,4 +15,8 @@ log_events:
 - - 2009-07-08 20:26:29.857750 Z
   - bowbow99 <bowbow99@coffee>
   - created
+  - ""
+- - 2009-07-09 11:52:27.796125 Z
+  - bowbow99 <bowbow99@coffee>
+  - changed status from unstarted to in_progress
   - ""
