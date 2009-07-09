@@ -24,3 +24,10 @@ log_events:
   - bowbow99 <bowbow99@coffee>
   - commented
   - now expansion contains multiple-value-setq only when there is multiple stores.
+- - 2009-07-09 12:55:21.802500 Z
+  - bowbow99 <bowbow99@coffee>
+  - commented
+  - |-
+    implant newvalue into store form if:
+    - newvalues is form of (values ...)
+    - newvalue (one of arguments for values) is a constant or a symbol

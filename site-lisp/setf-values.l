@@ -4,7 +4,7 @@
 ;;;;
 ;;;; Author: bowbow99 <bowbow99@gmail.com>
 ;;;; Created: 2009-07-09 04:29:43
-;;;; Updated: 2009-07-09 21:30:11
+;;;; Updated: 2009-07-09 21:51:18
 ;;;;
 
 
@@ -25,7 +25,9 @@
 
 (defun optimize-setf-method (vars vals stores store-form access-form newvalues)
   (let ((new-vars '())
-        (new-vals '()))
+        (new-vals '())
+        (new-stores '())
+        (new-newvalues (copy-list newvalues)))
     (do ((var vars (cdr var))
          (val vals (cdr val)))
         ((endp var))
@@ -37,7 +39,21 @@
                                        :test #'eq)))
             (t (push (car var) new-vars)
                (push (car val) new-vals))))
-    (values new-vars new-vals stores store-form access-form newvalues)))
+    (when (and (> (length stores) 1)
+               (car newvalues)
+               (eq (caar newvalues) 'values))
+      (setf new-newvalues '((values)))
+      (do ((store stores (cdr store))
+           (newval (cdar newvalues) (cdr newval)))
+          ((endp store))
+        (if (or (constantp (car newval))
+                (symbolp (car newval)))
+            (setq store-form (nsubst (car newval) (car store) store-form
+                                     :test #'eq))
+          (progn
+            (push (car store) new-stores)
+            (push (car newval) (cdar new-newvalues))))))
+    (values new-vars new-vals new-stores store-form access-form new-newvalues)))
 
 
 (defun setf-expand-1 (place newvalue env)
