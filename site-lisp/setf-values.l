@@ -4,7 +4,7 @@
 ;;;;
 ;;;; Author: bowbow99 <bowbow99@gmail.com>
 ;;;; Created: 2009-07-09 04:29:43
-;;;; Updated: 2009-07-09 21:51:18
+;;;; Updated: 2009-07-09 21:59:25
 ;;;;
 
 
@@ -27,7 +27,7 @@
   (let ((new-vars '())
         (new-vals '())
         (new-stores '())
-        (new-newvalues (copy-list newvalues)))
+        (new-newvalues newvalues))
     (do ((var vars (cdr var))
          (val vals (cdr val)))
         ((endp var))
