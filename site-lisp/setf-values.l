@@ -4,7 +4,7 @@
 ;;;;
 ;;;; Author: bowbow99 <bowbow99@gmail.com>
 ;;;; Created: 2009-07-09 04:29:43
-;;;; Updated: 2009-07-17 04:19:31
+;;;; Updated: 2009-07-17 04:22:48
 ;;;;
 ;;;; License: The MIT License (http://www.opensource.org/licenses/mit-license.php)
 #|
@@ -31,10 +31,6 @@ THE SOFTWARE.
 
 
 (in-package "lisp")
-
-(defconstant +original-get-setf-method+ #'get-setf-method)
-(defconstant +original-optimize-setf-method #'optimize-setf-method)
-(defconstant +original-setf-expand-1 #'setf-expand-1)
 
 ;;;;
 ;;;; setf related functions modified for support multiple value.
