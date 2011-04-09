@@ -106,12 +106,20 @@ THE SOFTWARE.
 
 ;;;;
 ;;;; (setf (value ...) ...)
-;;;;
 
-(define-setf-method values (&rest places)
-  (let ((syms (mapcar #'gensym places)))
-    (values nil nil syms
-            `(setf ,@(mapcan #'list places syms)))))
+(define-setf-method values (&environment env &rest places)
+  (labels ((mappend (fn &rest lists)
+             (apply #'append (apply #'mapcar fn lists))))
+    (let ((expansions (mapcar (lambda (place)
+                                (multiple-value-list
+                                 (get-setf-method-multiple-value place env)))
+                        places)))
+      (values (mappend #'first  expansions)
+              (mappend #'second expansions)
+              (mappend #'third  expansions)
+              `(values ,@(mapcar #'fourth expansions))
+              `(values ,@(mapcar #'fifth  expansions))))))
+
 
 (provide "setf-values")
 ;;;; setf-values.l ends here
