@@ -1,40 +1,18 @@
-;;;; -*- mode: lisp; package: lisp -*-
-;;;;
-;;;; setf-values.l --- make setf support multiple values.
-;;;;
-;;;; Author: bowbow99 <bowbow99@gmail.com>
-;;;; Created: 2009-07-09 04:29:43
-;;;; Updated: 2009-07-17 04:22:48
-;;;;
-;;;; License: The MIT License (http://www.opensource.org/licenses/mit-license.php)
-#|
-Copyright (c) 2009 Tohru Kitamura
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-|#
-
+;;; -*- mode: lisp; package: lisp -*-
+;;;
+;;; setf-values.l --- setf ‚Å‘½’l‚ðˆµ‚¦‚é‚æ‚¤‚É‚·‚é
+;;;
+;;; Author:     bowbow99  <bowbow99@gmail.com>
+;;; Version:    0.01.00
+;;; Category:   Lisp Libraries
+;;; License:    MIT (see COPYING.mit)
+;;; Commentary: (see README.md)
+;;; ChangeLog:  (see ChangeLog)
 
 (in-package "lisp")
 
 ;;;;
-;;;; setf related functions modified for support multiple value.
-;;;;
+;;;; * setf related functions modified for support multiple value.
 
 (defun get-setf-method (form &optional env)
   (multiple-value-bind (vars vals stores store-form access-form)
@@ -100,7 +78,7 @@ THE SOFTWARE.
 
 
 ;;;;
-;;;; (setf (value ...) ...)
+;;;; * values as place
 
 (define-setf-method values (&environment env &rest places)
   (labels ((mappend (fn &rest lists)

@@ -1,49 +1,33 @@
-Overview
-=============
-add support for multiple values on setf.
+これは何
+========
+xyzzy の `setf` で多値を扱えるようにする。
 
-this extension re-define some functions in lisp/setf.l to make setf
-support multiple values.
-
-- lisp::optimize-setf-method
-- lisp::setf-expand-1
-- lisp::get-setf-method
-
-and define-setf-method for values.
-
-License
+インストール
 ============
-The MIT License
 
-Copyright (c) <year> <copyright holders>
+NetInstaller から
+-----------------
+<del>[カフェイン中毒] からどうぞ。</del>
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+  [カフェイン中毒]: http://bowbow99.sakura.ne.jp/xyzzy/packages.l
 
 
-Usage
-=======
-just put setf-values.l somewhene in *load-path* and load it.
-
-(require "setf-values")
-
-
-Notes
+使い方
 ======
-when you need original implementation of setf for some reasons, you can
-restore it by loading original setf.l.
+読み込むだけで多値を受け取る汎変数に `setf` できるようになります。
+
+    (eval-when (:execute :compile-toplevel :load-toplevel)
+      (require "setf-values"))
+
+
+注意点、既知の問題など
+======================
+- 以下の関数を上書きしています。
+  - `lisp::optimize-setf-method`
+  - `lisp::setf-expand-1`
+  - `lisp::get-setf-method`
+
+バグ報告、質問、要望などは [GitHubIssues] か [@bowbow99] あたりへお願いします。
+
+  [GitHubIssues]: http://github.com/bowbow99/xyzzy.setf-values/issues
+  [@bowbow99]: http://twitter.com/bowbow99
