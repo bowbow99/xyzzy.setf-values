@@ -78,31 +78,24 @@ THE SOFTWARE.
 (defun setf-expand-1 (place newvalue env)
   (if (atom place)
     `(setq ,place ,newvalue)
-    (let (f)
-      (when (and (null (get (car place) 'setf-update))
-                 (null (get (car place) 'setf-lambda)))
-        (multiple-value-setq (place f) (macroexpand-1 place env))
-        (when f
-          (return-from setf-expand-1 (setf-expand-1 place newvalue env))))
-      (when (setq f (get (car place) 'setf-update))
-        (return-from setf-expand-1 `(,f ,@(cdr place) ,newvalue)))
-      (multiple-value-bind (vars vals stores store-form access-form)
-          (get-setf-method place env)
-        (multiple-value-setq
-            (vars vals stores store-form access-form newvalue)
-            (optimize-setf-method vars vals stores store-form
-                                  access-form (list newvalue)))
-        (setf vars (append vars stores)
-              vals (append vals (if (= (length stores) 1)
-                                  newvalue
-                                  (mapcar (lambda (ignore) nil) stores))))
-        (cond ((null vars) store-form)
-              ((> (length stores) 1)
-               `(let* ,(mapcar #'list vars vals)
-                  (multiple-value-setq ,stores ,(car newvalue))
-                  ,store-form))
-              (t `(let* ,(mapcar #'list vars vals)
-                    ,store-form)))))))
+    (multiple-value-bind (vars vals stores store-form access-form)
+        (get-setf-method place env)
+      (multiple-value-setq
+          (vars vals stores store-form access-form newvalue)
+          (optimize-setf-method vars vals stores store-form
+                                access-form (list newvalue)))
+      (setf vars (append vars stores)
+            vals (append vals (if (= (length stores) 1)
+                                newvalue
+                                (mapcar (lambda (ignore) nil) stores))))
+      (cond ((null vars) store-form)
+            ((> (length stores) 1)
+             `(let* ,(mapcar #'list vars vals)
+                (multiple-value-setq ,stores ,(car newvalue))
+                ,store-form))
+            (t `(let* ,(mapcar #'list vars vals)
+                  ,store-form))))))
+
 
 ;;;;
 ;;;; (setf (value ...) ...)
