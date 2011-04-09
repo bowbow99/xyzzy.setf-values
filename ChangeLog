@@ -1,5 +1,7 @@
 2011-04-09  bowbow99  <bowbow99@gmail.com>
 
+	* version 0.01.01
+
 	* `values` の setf-expander が色々ダメだったのをマシにした。
 	  - subforms の setf-expansion を使うように。
 	  - store-form が設定した多値を返すように（最後の値だけ返ってた）。
