@@ -84,17 +84,19 @@ THE SOFTWARE.
           (vars vals stores store-form access-form newvalue)
           (optimize-setf-method vars vals stores store-form
                                 access-form (list newvalue)))
-      (setf vars (append vars stores)
-            vals (append vals (if (= (length stores) 1)
-                                newvalue
-                                (mapcar (lambda (ignore) nil) stores))))
-      (cond ((null vars) store-form)
-            ((> (length stores) 1)
-             `(let* ,(mapcar #'list vars vals)
-                (multiple-value-setq ,stores ,(car newvalue))
-                ,store-form))
-            (t `(let* ,(mapcar #'list vars vals)
-                  ,store-form))))))
+      (multiple-value-bind (bindings store-from)
+          (if (= (length stores) 1)
+            (values (mapcar #'list
+                      (append vars stores)
+                      (append vals newvalue))
+                    store-from)
+            (values (mapcar #'list vars vals)
+                    `(multiple-value-bind (,@stores)
+                         ,(car newvalue)
+                       store-form)))
+        (if (null bindings)
+          store-form
+          `(let* (,@bindings) ,store-form))))))
 
 
 ;;;;
