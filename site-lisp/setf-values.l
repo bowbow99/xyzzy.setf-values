@@ -67,7 +67,7 @@
             (values (mapcar #'list
                       (append vars stores)
                       (append vals newvalue))
-                    store-from)
+                    store-form)
             (values (mapcar #'list vars vals)
                     `(multiple-value-bind (,@stores)
                          ,(car newvalue)
