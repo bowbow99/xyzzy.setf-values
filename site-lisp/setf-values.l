@@ -77,7 +77,7 @@ THE SOFTWARE.
 
 (defun setf-expand-1 (place newvalue env)
   (if (atom place)
-      `(setq ,place ,newvalue)
+    `(setq ,place ,newvalue)
     (let (f)
       (when (and (null (get (car place) 'setf-update))
                  (null (get (car place) 'setf-lambda)))
@@ -94,7 +94,7 @@ THE SOFTWARE.
                                   access-form (list newvalue)))
         (setf vars (append vars stores)
               vals (append vals (if (= (length stores) 1)
-                                    newvalue
+                                  newvalue
                                   (mapcar (lambda (ignore) nil) stores))))
         (cond ((null vars) store-form)
               ((> (length stores) 1)
