@@ -55,7 +55,11 @@
 
 (defun setf-expand-1 (place newvalue env)
   (if (atom place)
-    `(setq ,place ,newvalue)
+    (progn
+      (unless (and (symbolp place)
+                   (not (constantp place)))
+        (error "~S ‚É‚Í setf ‚Å‚«‚Ü‚¹‚ñ" place))
+      `(setq ,place ,newvalue))
     (multiple-value-bind (vars vals stores store-form access-form)
         (get-setf-method place env)
       (multiple-value-setq
