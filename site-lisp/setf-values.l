@@ -55,14 +55,18 @@
 
 (defun setf-expand-1 (place newvalue env)
   (if (atom place)
-    `(setq ,place ,newvalue)
+    (progn
+      (unless (and (symbolp place)
+                   (not (constantp place)))
+        (error "~S ‚É‚Í setf ‚Å‚«‚Ü‚¹‚ñ" place))
+      `(setq ,place ,newvalue))
     (multiple-value-bind (vars vals stores store-form access-form)
         (get-setf-method place env)
       (multiple-value-setq
           (vars vals stores store-form access-form newvalue)
           (optimize-setf-method vars vals stores store-form
                                 access-form (list newvalue)))
-      (multiple-value-bind (bindings store-from)
+      (multiple-value-bind (bindings store-form)
           (if (= (length stores) 1)
             (values (mapcar #'list
                       (append vars stores)
@@ -71,7 +75,7 @@
             (values (mapcar #'list vars vals)
                     `(multiple-value-bind (,@stores)
                          ,(car newvalue)
-                       store-form)))
+                       ,store-form)))
         (if (null bindings)
           store-form
           `(let* (,@bindings) ,store-form))))))

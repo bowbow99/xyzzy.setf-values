@@ -1,3 +1,14 @@
+2011-09-30  MIYAMUKO Katsuyuki  <miyamuko@gmail.com>
+
+	* (setf (values a b c) (progn (values 1 2 3))) とかしたときに、
+	  「変数が定義されていません: #:G2532」というエラーになっていた
+	  のを修正
+
+2011-09-30  bowbow99  <bowbow99@gmail.com>
+
+	* (setf 3 8) とかしたときに、(setq 3 8) に展開されてからエラーに
+	  なっていたのを展開時にエラー投げるようにした。
+
 2011-04-09  bowbow99  <bowbow99@gmail.com>
 
 	* version 0.01.01
