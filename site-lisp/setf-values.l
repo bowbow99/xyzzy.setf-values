@@ -3,7 +3,7 @@
 ;;; setf-values.l --- setf ‚Å‘½’l‚ðˆµ‚¦‚é‚æ‚¤‚É‚·‚é
 ;;;
 ;;; Author:     bowbow99  <bowbow99@gmail.com>
-;;; Version:    0.01.01
+;;; Version:    0.01.02
 ;;; Category:   Lisp Libraries
 ;;; License:    MIT (see COPYING.mit)
 ;;; Commentary: (see README.md)
